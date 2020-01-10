@@ -127,12 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Employee.h" />
-    <ClInclude Include="Roll.h" />
+    <ClInclude Include="Role.h" />
     <ClInclude Include="Scheduler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Employee.cpp" />
-    <ClCompile Include="Roll.cpp" />
+    <ClCompile Include="Role.cpp" />
     <ClCompile Include="Scheduler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
