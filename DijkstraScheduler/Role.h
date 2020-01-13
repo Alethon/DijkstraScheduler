@@ -9,10 +9,8 @@
 #include <vector>
 
 #include "Employee.h"
-//#include "rapidxml/rapidxml.hpp"
 
 using namespace std;
-//using namespace rapidxml;
 
 class Role {
 protected:
@@ -24,6 +22,7 @@ public:
 	Role(string, vector<Employee>, int);
 	Role(const Role&);
 	virtual ~Role();
+	void print();
 };
 
 #endif /*ROLE*/

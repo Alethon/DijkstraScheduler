@@ -13,9 +13,6 @@
 
 using namespace std;
 
-vector<string> getVectorFromFileName(string);
-map<string, int> getMapFromVector(vector<string>);
-
 class Scheduler {
 protected:
 	const string roleFile = "roles.xml";
@@ -28,10 +25,11 @@ protected:
 	map<string, int> idMap;
 public:
 	const map<string, int>& getRoleMap();
-	const map<string, int>& getEmployeeMap();
+	//const map<string, int>& getEmployeeMap();
 	Scheduler();
 	Scheduler(const Scheduler&);
 	virtual ~Scheduler();
+	void printRoles();
 };
 
 

@@ -2,50 +2,26 @@
 #include <iostream>
 #include <string>
 
-#include "rapidxml/rapidxml.hpp"
-#include "rapidxml/rapidxml_utils.hpp"
+#include "utils.h"
 #include "Role.h"
 #include "Employee.h"
 
 using namespace std;
-using namespace rapidxml;
 
 Role::Role(string fileName, vector<Employee> e, int num) {
-	//initialize to defaults
-	name = "";
-	trainedEmployees = vector<int>();
+	vector<string> readData = getVectorFromFileName(fileName);
+
+	name = readData[0];
+
+	for (int i = 1; i < 4; i++)
+		sscanf_s(readData[i].c_str(), "%d", &(employeesNeeded[i - 1]));
 
 	for (int i = 0; i < e.size(); i++) {
 		if (e[i].hasRole(num))
 			trainedEmployees.push_back(i);
 	}
 
-	for (int i = 0; i < 3; i++)
-		employeesNeeded[i] = -1;
-
-	//populate from xml file
-	xml_node<>* node;
-	xml_attribute<>* attr;
-	file<> xml(fileName.c_str);
-	xml_document<> d;
-	d.parse<0>(xml.data());
-
-	node = d.first_node("role");
-	if (node == 0)
-		return;
-	
-	attr = node->first_attribute();
-	if (attr == 0)
-		return;
-	name = string(attr->value());
-
-	for (int i = 0; i < 3; i++) {
-		if (attr != 0)
-			attr = attr->next_attribute();
-
-		if (attr != 0)
-			sscanf(node->value(), "%d", &(employeesNeeded[i]));
-	}
+	readData.clear();
 
 	return;
 }
@@ -67,4 +43,17 @@ Role::~Role() {
 void Role::addTrainedEmployee(int e) {
 	trainedEmployees.push_back(e);
 	return;
+}
+
+void Role::print() {
+	cout << endl;
+	cout << "Role: " << name << endl;
+	cout << "day:\t" << employeesNeeded[0] << endl;
+	cout << "evening:\t" << employeesNeeded[1] << endl;
+	cout << "night:\t" << employeesNeeded[2] << endl;
+	cout << "trained:";
+	for (auto i = trainedEmployees.begin(); i != trainedEmployees.end(); ++i)
+		cout << " " << *i;
+	cout << endl;
+	cout << endl;
 }

@@ -3,43 +3,21 @@
 #include <vector>
 #include <map>
 
-#include "rapidxml/rapidxml.hpp"
-#include "rapidxml/rapidxml_utils.hpp"
+#include "utils.h"
 #include "Employee.h"
 
 using namespace std;
-using namespace rapidxml;
 
 Employee::Employee(string fileName, map<string, int> roleMap) {
-	//initialize to defaults
-	name = "";
-	id = "";
+	vector<string> readData = getVectorFromFileName(fileName);
 
-	roles = vector<int>();
+	name = readData[0];
+	id = readData[1];
 
-	//populate from xml file
-	xml_node<>* node;
-	xml_attribute<>* attr;
-	file<> xml(fileName.c_str);
-	xml_document<> d;
-	d.parse<0>(xml.data());
+	for (int i = 2; i < readData.size(); i++)
+		roles.push_back(roleMap[readData[i]]);
 
-	node = d.first_node("employee");
-	if (node == 0)
-		return;
-
-	attr = node->first_attribute();
-	if (attr == 0)
-		return;
-	name = string(attr->value());
-
-	attr = attr->next_attribute();
-	if (attr == 0)
-		return;
-	id = string(attr->value());
-
-	for (attr = attr->next_attribute(); attr; attr = attr->next_attribute())
-		roles.push_back(roleMap[string(attr->value())]);
+	readData.clear();
 
 	return;
 }
